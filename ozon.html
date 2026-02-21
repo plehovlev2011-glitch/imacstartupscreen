@@ -13,41 +13,50 @@
         }
 
         body {
-            background: #005bff;  /* ярко-синий Ozon */
+            background: #005bff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 0;  /* убрал отступы, чтобы баннер прилип к верху */
+            padding: 0;
         }
 
-        /* Рекламный баннер — прикреплен к верхней части */
-        .top-banner {
+        /* Контейнер для двух баннеров */
+        .banners-container {
             width: 100%;
-            background: #000;
+            background: #005bff; /* под цвет фона, чтобы сливалось */
             display: flex;
             justify-content: center;
-            border-bottom: 5px solid #ffd700;
-        }
-        
-        .banner-image {
-            width: 100%;
-            max-width: 1457px;  /* точно по размеру */
-            height: auto;
-            aspect-ratio: 1457/218;  /* сохраняем пропорции 1457x218 */
-            display: block;
-            object-fit: cover;  /* если картинка будет чуть другая, подрежется красиво */
+            padding: 20px 20px 0 20px;
+            gap: 20px;
         }
 
+        /* Каждый баннер */
+        .banner {
+            width: 1100px;        /* фиксированная ширина как просили */
+            height: 218px;        /* фиксированная высота */
+            background: #e0e0e0;  /* серый фон пока нет картинки */
+            overflow: hidden;
+            flex-shrink: 0;        /* чтобы не сжимались */
+        }
+
+        .banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;    /* чтобы картинка заполнила баннер */
+            display: block;
+        }
+
+        /* Основной белый блок */
         .container {
-            max-width: 1200px;
+            max-width: 1400px;     /* стал шире, чтобы вместить большие баннеры */
             width: 100%;
             background: white;
             border-radius: 60px;
             padding: 40px 50px;
             box-shadow: 0 25px 40px rgba(0,0,0,0.3);
             border: 5px solid #ffd700;
-            margin: 30px 20px;  /* отступы вокруг белого блока */
+            margin: 30px 20px;
         }
 
         /* Заголовок Ozon */
@@ -78,31 +87,31 @@
             border-radius: 40px;
         }
 
-        /* Поисковая строка — огромная */
+        /* Поисковая строка — УВЕЛИЧЕНА */
         .search-section {
             margin: 30px 0 40px;
         }
 
         .search-label {
-            font-size: 2rem;
+            font-size: 2.4rem;    /* побольше */
             font-weight: 600;
             color: #1f3a5f;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: block;
         }
 
         .search-row {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             align-items: center;
         }
 
         .search-input {
             flex: 1;
-            padding: 30px 35px;
-            font-size: 2.8rem;
-            border: 5px solid #005bff;
-            border-radius: 70px;
+            padding: 35px 40px;    /* больше поля */
+            font-size: 3.2rem;      /* крупнее текст */
+            border: 6px solid #005bff;
+            border-radius: 80px;
             outline: none;
             background: #f5f9ff;
             font-weight: 500;
@@ -112,15 +121,15 @@
 
         .search-input::placeholder {
             color: #7f9fbf;
-            font-size: 2.4rem;
+            font-size: 2.8rem;
         }
 
         .search-button {
             background: #ffd700;
             border: none;
-            border-radius: 70px;
-            padding: 30px 50px;
-            font-size: 2.8rem;
+            border-radius: 80px;
+            padding: 35px 60px;     /* больше кнопка */
+            font-size: 3.2rem;
             font-weight: bold;
             color: #001f3f;
             cursor: pointer;
@@ -136,18 +145,18 @@
         }
 
         .example-query {
-            margin-top: 15px;
-            font-size: 2rem;
+            margin-top: 20px;
+            font-size: 2.2rem;
             color: #2d4b6e;
             background: #e9f0fa;
-            padding: 15px 25px;
+            padding: 15px 30px;
             border-radius: 50px;
             display: inline-block;
         }
 
         /* Раздел "Рекомендуем на Озоне!" */
         .recommend-title {
-            font-size: 3rem;
+            font-size: 3.2rem;
             font-weight: 800;
             color: #005bff;
             margin: 50px 0 30px;
@@ -165,16 +174,20 @@
             margin-bottom: 20px;
         }
 
-        /* Карточка товара — большая плитка */
+        /* Карточка товара — теперь просто большая цветная кнопка (БЕЗ ФОТО) */
         .product-card {
             background: #f5f9ff;
             border-radius: 50px;
-            padding: 25px 20px 30px;
+            padding: 45px 20px 50px;  /* больше внутренний отступ */
             text-align: center;
             border: 4px solid #005bff;
             box-shadow: 0 15px 0 #003d99;
             transition: 0.1s;
             cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 280px;        /* высота как с фото */
         }
 
         .product-card:active {
@@ -182,56 +195,29 @@
             box-shadow: 0 5px 0 #003d99;
         }
 
-        .product-image {
-            width: 100%;
-            aspect-ratio: 1/1;
-            background: #d9e5ff;
-            border-radius: 40px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: #003585;
-            border: 3px dashed white;
-            overflow: hidden;
-        }
-
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
         .product-name {
-            font-size: 2.2rem;
+            font-size: 2.8rem;        /* крупнее название */
             font-weight: 700;
             color: #001f3f;
-            margin: 15px 0 10px;
+            margin: 10px 0 20px;
         }
 
         .product-price {
-            font-size: 2.8rem;
+            font-size: 3.2rem;        /* крупнее цена */
             font-weight: 900;
             color: #b12704;
             background: white;
-            padding: 10px 20px;
-            border-radius: 40px;
+            padding: 15px 25px;
+            border-radius: 50px;
             display: inline-block;
             border: 2px solid #ffd700;
-        }
-
-        .product-price small {
-            font-size: 1.8rem;
-            font-weight: normal;
-            color: #2d4b6e;
+            align-self: center;
         }
 
         .footer-note {
             margin-top: 40px;
             text-align: center;
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: white;
             background: #1f3a5f;
             padding: 20px;
@@ -240,21 +226,38 @@
         }
 
         /* Адаптация */
+        @media (max-width: 1400px) {
+            .banners-container {
+                flex-wrap: wrap;      /* если узко, баннеры перейдут на новую строку */
+            }
+            .banner {
+                width: 100%;
+                max-width: 1100px;
+            }
+        }
+
         @media (max-width: 800px) {
-            .container { padding: 20px; margin: 20px 10px; }
+            .container { padding: 20px; }
             .products-grid { grid-template-columns: 1fr; }
             .search-row { flex-direction: column; }
-            .search-input { padding: 20px; font-size: 2.2rem; width: 100%; }
-            .search-button { width: 100%; padding: 20px; }
+            .search-input { padding: 25px; font-size: 2.5rem; width: 100%; }
+            .search-button { width: 100%; padding: 25px; }
             .ozon-logo { font-size: 3.5rem; }
-            .ozon-header { flex-wrap: wrap; }
+            .banner { height: 150px; } /* поменьше на мобилках */
         }
     </style>
 </head>
 <body>
-    <!-- Рекламный баннер сверху (прикреплен к верхней части) -->
-    <div class="top-banner">
-        <img class="banner-image" src="banner.png" alt="Рекламный баннер" onerror="this.style.background='#ffd700'; this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%221457%22 height=%22218%22 viewBox=%220 0 1457 218%22><rect width=%221457%22 height=%22218%22 fill=%22%23d4af37%22/><text x=%2270%22 y=%22140%22 font-size=%2260%22 fill=%22%23000b3f%22 font-weight=%22bold%22>🛒 СУПЕР-РАСПРОДАЖА НА OZON 🛒</text><text x=%2270%22 y=%22190%22 font-size=%2236%22 fill=%22%23001f3f%22>Скидки до 70% на тысячи товаров!</text></svg>'">
+    <!-- Два баннера сверху (левый и правый) -->
+    <div class="banners-container">
+        <!-- Левый баннер (banner.png, banner2.png, banner3.png, banner4.png) -->
+        <div class="banner">
+            <img id="leftBanner" src="banner.png" alt="Реклама">
+        </div>
+        <!-- Правый баннер (bannerR.png, bannerR2.png, bannerR3.png, bannerR4.png) -->
+        <div class="banner">
+            <img id="rightBanner" src="bannerR.png" alt="Реклама">
+        </div>
     </div>
 
     <div class="container">
@@ -264,7 +267,7 @@
             <span class="ozon-sub">ИНТЕРНЕТ-ТОВАРЫ</span>
         </div>
 
-        <!-- Поисковая строка (рабочая) -->
+        <!-- Поисковая строка (увеличенная) -->
         <div class="search-section">
             <div class="search-label">🔍 Что ищем сегодня?</div>
             <div class="search-row">
@@ -289,47 +292,41 @@
     </div>
 
     <script>
-        // --- СПИСОК ИЗ 20 ТОВАРОВ (наименования + цена + имя файла) ---
+        // --- СПИСОК ИЗ 20 ТОВАРОВ (наименования + цена) ---
         const products = [
-            { name: "Носки шерстяные (пара)", price: 890, file: "1.png" },
-            { name: "Журнал 'Сад и огород'", price: 350, file: "2.png" },
-            { name: "Платье в цветочек", price: 3990, file: "3.png" },
-            { name: "iMac 24\" 8GB 256GB", price: 149990, file: "4.png" },
-            { name: "Телевизор 55\" 4K", price: 59990, file: "5.png" },
-            { name: "Лампа настольная LED", price: 2490, file: "6.png" },
-            { name: "Подушка ортопедическая", price: 3250, file: "7.png" },
-            { name: "Торшер напольный", price: 5490, file: "8.png" },
-            { name: "iPhone 15 128GB", price: 79990, file: "9.png" },
-            { name: "Чайник электрический", price: 2790, file: "10.png" },
-            { name: "Кружка с подогревом", price: 1290, file: "11.png" },
-            { name: "Плед мягкий 150x200", price: 3590, file: "12.png" },
-            { name: "Набор кастрюль 3шт", price: 4990, file: "13.png" },
-            { name: "Фен для волос", price: 3190, file: "14.png" },
-            { name: "Утюг беспроводной", price: 4290, file: "15.png" },
-            { name: "Микроволновка 20л", price: 9990, file: "16.png" },
-            { name: "Пылесос ручной", price: 6990, file: "17.png" },
-            { name: "Весы напольные", price: 1990, file: "18.png" },
-            { name: "Термос 1л", price: 1590, file: "19.png" },
-            { name: "Зонт автомат", price: 1490, file: "20.png" }
+            { name: "Носки шерстяные (пара)", price: 890 },
+            { name: "Журнал 'Сад и огород'", price: 350 },
+            { name: "Платье в цветочек", price: 3990 },
+            { name: "iMac 24\" 8GB 256GB", price: 149990 },
+            { name: "Телевизор 55\" 4K", price: 59990 },
+            { name: "Лампа настольная LED", price: 2490 },
+            { name: "Подушка ортопедическая", price: 3250 },
+            { name: "Торшер напольный", price: 5490 },
+            { name: "iPhone 15 128GB", price: 79990 },
+            { name: "Чайник электрический", price: 2790 },
+            { name: "Кружка с подогревом", price: 1290 },
+            { name: "Плед мягкий 150x200", price: 3590 },
+            { name: "Набор кастрюль 3шт", price: 4990 },
+            { name: "Фен для волос", price: 3190 },
+            { name: "Утюг беспроводной", price: 4290 },
+            { name: "Микроволновка 20л", price: 9990 },
+            { name: "Пылесос ручной", price: 6990 },
+            { name: "Весы напольные", price: 1990 },
+            { name: "Термос 1л", price: 1590 },
+            { name: "Зонт автомат", price: 1490 }
         ];
 
         // Функция для получения 3 случайных товаров
         function getRandomProducts(count = 3) {
-            // перемешиваем массив и берём первые count
             const shuffled = [...products].sort(() => Math.random() - 0.5);
             return shuffled.slice(0, count);
         }
 
-        // Функция для создания HTML карточки
+        // Функция для создания HTML карточки (теперь просто кнопка)
         function createProductCard(product) {
-            // Форматируем цену с пробелами
             const formattedPrice = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-            
             return `
                 <div class="product-card" onclick="searchProduct('${product.name}')">
-                    <div class="product-image">
-                        <img src="${product.file}" alt="${product.name}" onerror="this.style.background='#b3d0ff'; this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect width=%22200%22 height=%22200%22 fill=%22%234285f4%22/><text x=%2250%22 y=%22120%22 font-size=%2220%22 fill=%22white%22>${product.name.substring(0,15)}</text></svg>'">
-                    </div>
                     <div class="product-name">${product.name}</div>
                     <div class="product-price">${formattedPrice} ₽</div>
                 </div>
@@ -343,32 +340,63 @@
             container.innerHTML = randomProducts.map(createProductCard).join('');
         }
 
-        // Функция поиска (открывает Ozon с запросом)
+        // Функция поиска
         window.searchProduct = function(query) {
             const encoded = encodeURIComponent(query).replace(/%20/g, '+');
             window.location.href = `https://www.ozon.ru/search/?from_global=true&text=${encoded}`;
         };
 
-        // Обработка поисковой строки
+        // Обработка поиска
         document.getElementById('searchBtn').addEventListener('click', function() {
             const query = document.getElementById('searchInput').value.trim();
-            if (query) {
-                searchProduct(query);
-            }
+            if (query) searchProduct(query);
         });
 
-        // Разрешаем поиск по Enter
         document.getElementById('searchInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 const query = this.value.trim();
-                if (query) {
-                    searchProduct(query);
-                }
+                if (query) searchProduct(query);
             }
         });
 
-        // Инициализация: показываем 3 случайных товара
+        // Инициализация товаров
         renderRecommendations();
+
+        // --- СКРИПТ ДЛЯ СМЕНЫ БАННЕРОВ КАЖДЫЕ 8 СЕКУНД ---
+        const leftBanner = document.getElementById('leftBanner');
+        const rightBanner = document.getElementById('rightBanner');
+
+        // Массивы с именами файлов для левого и правого баннера
+        const leftBanners = ['banner.png', 'banner2.png', 'banner3.png', 'banner4.png'];
+        const rightBanners = ['bannerR.png', 'bannerR2.png', 'bannerR3.png', 'bannerR4.png'];
+
+        let leftIndex = 0;
+        let rightIndex = 0;
+
+        function changeBanners() {
+            // Смена левого баннера
+            leftIndex = (leftIndex + 1) % leftBanners.length;
+            leftBanner.src = leftBanners[leftIndex];
+            leftBanner.alt = `Реклама ${leftIndex + 1}`;
+
+            // Смена правого баннера
+            rightIndex = (rightIndex + 1) % rightBanners.length;
+            rightBanner.src = rightBanners[rightIndex];
+            rightBanner.alt = `Реклама ${rightIndex + 1}`;
+        }
+
+        // Запускаем интервал на 8 секунд (8000 мс)
+        setInterval(changeBanners, 8000);
+
+        // Обработка ошибок загрузки изображений (чтобы не было битых ссылок)
+        leftBanner.onerror = function() {
+            this.style.background = '#ffd700';
+            this.alt = 'Реклама временно недоступна';
+        };
+        rightBanner.onerror = function() {
+            this.style.background = '#ffd700';
+            this.alt = 'Реклама временно недоступна';
+        };
     </script>
 </body>
 </html>

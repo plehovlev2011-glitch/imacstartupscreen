@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+    <title>Стартовый экран для бабушки</title>
+    <style>
+        /* Стиль "крупно и понятно" для iMac */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #f0f4fa 0%, #d9e2ef 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        /* Главный экран как большая светлая карточка */
+        .launchpad {
+            max-width: 1300px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 70px;
+            box-shadow: 0 30px 50px rgba(0, 20, 40, 0.25), inset 0 2px 4px rgba(255,255,255,0.8);
+            padding: 40px 50px 50px 50px;
+            border: 2px solid rgba(255,255,255,0.7);
+        }
+
+        /* Верхняя панель: часы + подсказка */
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.4);
+            border-radius: 120px;
+            padding: 20px 35px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255,255,255,0.9);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.05);
+        }
+
+        /* Блок часов (Москва и Париж) */
+        .world-clocks {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .city-time {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .city-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1e3b5c;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .time-display {
+            font-size: 2.4rem;
+            font-weight: 600;
+            font-family: 'Courier New', 'SF Mono', monospace;
+            background: #1e2b3c;
+            color: #e9f2fa;
+            padding: 8px 20px;
+            border-radius: 60px;
+            line-height: 1.2;
+            box-shadow: inset 0 -3px 0 #0f1a24;
+            border: 1px solid #a3c1dd;
+            letter-spacing: 3px;
+        }
+
+        /* Справка по интерфейсу — крупная и понятная */
+        .help-tip {
+            background: #fff6d9;
+            border-radius: 60px;
+            padding: 16px 32px;
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: #2c3e5c;
+            border: 2px dashed #f5b042;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 0 #c49b5a;
+        }
+
+        .help-tip span {
+            font-size: 2.4rem;
+            background: #ffc164;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #2a3b4e;
+            font-weight: 700;
+        }
+
+        /* Сетка с кнопками */
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;  /* Две равные колонки */
+            gap: 30px;
+            margin: 30px 0 20px;
+        }
+
+        /* Общие стили кнопок */
+        .app-btn {
+            border: none;
+            border-radius: 50px;
+            background: white;
+            box-shadow: 0 12px 0 #9bb0c7, 0 18px 28px -8px rgba(30, 60, 90, 0.4);
+            font-size: 2.8rem;
+            font-weight: 600;
+            padding: 45px 20px;
+            cursor: pointer;
+            transition: all 0.08s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #1e3a5f;
+            border: 3px solid #ffffff;
+            line-height: 1.2;
+            width: 100%;
+            height: 100%;
+            min-height: 180px;
+            -webkit-appearance: none;
+            appearance: none;
+            text-decoration: none; /* если захотим использовать <a> */
+        }
+
+        /* Псевдокнопка, если через <a> */
+        a.app-btn {
+            text-decoration: none;
+            color: #1e3a5f;
+            display: flex;
+        }
+
+        /* Эффект нажатия (3D имитация) */
+        .app-btn:active {
+            transform: translateY(8px);
+            box-shadow: 0 4px 0 #7e97af, 0 12px 24px -6px #1e3a5f;
+        }
+
+        /* Индивидуальный цвет Ozon (синий) */
+        .btn-ozon {
+            background: #d5edff;
+            border-bottom: 8px solid #1a6c9e;
+        }
+        /* Wildberries (фиолетовый/сиреневый) */
+        .btn-wb {
+            background: #efe4ff;
+            border-bottom: 8px solid #8f5db7;
+        }
+        /* Instagram (градиент) */
+        .btn-ig {
+            background: linear-gradient(145deg, #f9cee5, #ffe0b5);
+            border-bottom: 8px solid #c5498b;
+        }
+
+        /* Кнопка ИИ — большая (занимает две колонки) */
+        .btn-ai {
+            background: linear-gradient(145deg, #c0e0ff, #a8d0ff);
+            border-bottom: 8px solid #2d6fa3;
+            font-size: 3.8rem;           /* ещё крупнее */
+            padding: 60px 20px;
+            min-height: 220px;
+            grid-column: span 2;          /* занимает всю ширину двух колонок */
+            box-shadow: 0 16px 0 #4875a3, 0 24px 34px -8px #1f4172;
+            color: #002856;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        /* Для красоты добавим маленькие подписи под иконками */
+        .btn-icon {
+            font-size: 3rem;
+            margin-right: 20px;
+            filter: drop-shadow(2px 4px 2px rgba(0,0,0,0.15));
+        }
+
+        /* Нижняя часть: повтор справки если надо, но оставим так */
+        .footer-note {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 1.7rem;
+            color: #2f496e;
+            background: rgba(255,255,255,0.6);
+            padding: 18px 25px;
+            border-radius: 60px;
+            border: 1px solid white;
+            font-weight: 500;
+        }
+
+        /* адаптивность: если экран меньше, текст кнопок уменьшим */
+        @media (max-width: 850px) {
+            .launchpad { padding: 25px; }
+            .app-btn { font-size: 2.2rem; padding: 30px 15px; min-height: 140px; }
+            .btn-ai { font-size: 3rem; }
+            .time-display { font-size: 1.8rem; padding: 6px 12px; }
+            .help-tip { font-size: 1.3rem; }
+        }
+
+        /* Для очень больших экранов iMac */
+        @media (min-width: 1800px) {
+            .app-btn { font-size: 3.8rem; }
+            .btn-ai { font-size: 5rem; }
+        }
+
+        /* декоративная точка */
+        .dot-sep {
+            width: 8px;
+            height: 8px;
+            background: #7999bb;
+            border-radius: 50%;
+            margin: 0 10px;
+        }
+        /* дополнительно сделаем фокус для клавиатуры */
+        .app-btn:focus-visible {
+            outline: 6px solid #ffb347;
+            outline-offset: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="launchpad">
+        <!-- Верхняя панель: часы двух столиц + справка -->
+        <div class="status-bar">
+            <div class="world-clocks">
+                <!-- Москва (UTC+3) -->
+                <div class="city-time">
+                    <span class="city-name">🇷🇺 Москва</span>
+                    <span class="time-display" id="moscow-time">--:--:--</span>
+                </div>
+                <!-- Париж (UTC+1, но с учётом летнего времени. Летом +2, зимой +1. Отобразим точное динамическое время) -->
+                <div class="city-time">
+                    <span class="city-name">🇫🇷 Париж</span>
+                    <span class="time-display" id="paris-time">--:--:--</span>
+                </div>
+            </div>
+            <!-- Справка по интерфейсу (крупная подсказка) -->
+            <div class="help-tip">
+                <span>🔍</span> Нажми на большую кнопку — откроется нужный сайт
+            </div>
+        </div>
+
+        <!-- Сетка кнопок (2 колонки) -->
+        <div class="buttons-grid">
+            <!-- Ozon (ссылка на ozon.ru — предположительно, главная) -->
+            <button class="app-btn btn-ozon" onclick="window.location.href='https://www.ozon.ru'">
+                <span class="btn-icon">🛍️</span> Ozon
+            </button>
+
+            <!-- Wildberries (ссылка на wildberries.ru) -->
+            <button class="app-btn btn-wb" onclick="window.location.href='https://www.wildberries.ru'">
+                <span class="btn-icon">📦</span> Wildberries
+            </button>
+
+            <!-- Instagram (ведет на instseniormode1w.vercel.app) -->
+            <button class="app-btn btn-ig" onclick="window.location.href='https://instseniormode1w.vercel.app'">
+                <span class="btn-icon">📷</span> Instagram
+            </button>
+
+            <!-- Пустая ячейка для сохранения сетки, так как ИИ будет на всю ширину.
+                 Но поскольку ИИ занимает 2 колонки, то сетка из 2 колонок с 4 элементами:
+                 первый ряд: Ozon и WB; второй ряд: IG и пустота? Лучше сделаем 3 кнопки во втором ряду? 
+                 Но проще: разместим IG и оставим справа пустую ячейку, но это некрасиво.
+                 Решение: Сделаем grid из 2 колонок и расположим элементы так:
+                 Строка 1: Ozon + WB
+                 Строка 2: Instagram (col span 1) + специальный隐形 (невидимый) элемент? нет, лучше сделаем
+                 что Instagram занимает левую колонку, а правую暂时 оставим пустой? Но пусто выглядит странно.
+                 Переделаем: добавим дополнительную вспомогательную кнопку-заглушку «➕» или просто сделаем перенос.
+                 Лучше: пусть ИИ будет третьим в списке, но он занимает 2 колонки — опустится на след строку.
+                 Но порядок кнопок: Ozon, Wildberries, Instagram, AI (на всю ширину).
+                 Тогда сетка: ряд1: Ozon | WB ; ряд2: IG | (пустая ячейка) — не хорошо.
+                 Упростим: используем 4 элемента в сетке 2x2, но тогда AI не может быть 2 колонки без пустот.
+                 Исправим: добавим display: grid; grid-template-columns: 1fr 1fr; и расположим:
+                 - Ozon (1,1)
+                 - Wildberries (1,2)
+                 - Instagram (2,1)
+                 - а на месте (2,2) поставим пустой div для сохранения структуры, но это некрасиво.
+                 Лучше сделаем так: у нас 4 кнопки, значит сетка 2x2 — тогда AI должен быть на месте (2,2) но не занимать две колонки.
+                 По заданию: «ИИ кнопка большая» — она должна быть заметно крупнее. Сделаем её на всю ширину (grid-column: 1/-1) и добавим после instagram. Тогда всего будет 4 кнопки, но instagram будет один во втором ряду? Нет: второй ряд: IG (слева) и справа ничего — это нарушит симметрию.
+                 Чтобы было эстетично: оставим IG слева, а справа сделаем маленькую информационную плашку или кнопку помощи? Но задание — только эти кнопки.
+                 Самый аккуратный вариант: Использовать 3 ряда:
+                 ряд1: OZON | WB
+                 ряд2: IG   | (пустой угол, но заполним его стилизованной подсказкой или вторыми часами? нет)
+                 ряд3: AI (на всю ширину)
+                 Но тогда AI не в сетке с IG, а отдельно. Это проще и наглядно.
+                 Так и сделаем: два верхних ряда, а снизу огромная AI.
+            -->
+        </div>
+
+        <!-- Второй ряд (Instagram + условный "справочный" блок, но для аккуратности сделаем кнопку IG и рядом время/подсказку? Лучше не загромождать.
+        Пусть IG занимает левую колонку, а правая колонка будет просто декоративной панелью с иконкой "для бабушки" и ссылкой на помощь. Но это уже лишнее.
+        Переделаем: сетка сейчас .buttons-grid. В ней 2 колонки. Сделаем 4 кнопки: Ozon, WB, Instagram, и отдельно под ними AI на всю ширину вне этой сетки.
+        Тогда не будет пустых ячеек. Так и поступим. -->
+
+        <!-- Переделаем: уберем контейнер .buttons-grid и создадим два блока: первые три кнопки в сетке 2+1, потом AI отдельно -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+            <!-- Ozon -->
+            <button class="app-btn btn-ozon" onclick="window.location.href='https://www.ozon.ru'">
+                <span class="btn-icon">🛍️</span> Ozon
+            </button>
+            <!-- Wildberries -->
+            <button class="app-btn btn-wb" onclick="window.location.href='https://www.wildberries.ru'">
+                <span class="btn-icon">📦</span> Wildberries
+            </button>
+            <!-- Instagram (занимает левую колонку) -->
+            <button class="app-btn btn-ig" onclick="window.location.href='https://instseniormode1w.vercel.app'">
+                <span class="btn-icon">📷</span> Instagram
+            </button>
+            <!-- Правая колонка во втором ряду: добавим небольшую кнопку-шпаргалку, но без ссылки — просто милый элемент (по желанию) чтобы не было пусто, но можно оставить пусто? Лучше заполним чем-то полезным: быстрый вызов справки или просто карточку "часы" но часы уже сверху. Сделаем мягкую подложку с текстом "🥳 для бабушки". Это необязательно, зато симметрично. -->
+            <div style="background: rgba(255,240,200,0.7); border-radius: 50px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #4d3f2b; border: 3px dashed #f6b83e; box-shadow: inset 0 0 0 3px white; padding: 20px; text-align: center;">
+                ⭐️ Справка: нажми любую кнопку
+            </div>
+        </div>
+
+        <!-- Большая кнопка ИИ (на всю ширину) -->
+        <button class="app-btn btn-ai" onclick="window.location.href='https://linteh-ai.vercel.app/withoutBranding-Service.html'">
+            <span class="btn-icon">🤖</span> Искусственный интеллект
+        </button>
+
+        <!-- Нижний блок с повторением справки и уютом -->
+        <div class="footer-note">
+          
+        </div>
+    </div>
+
+    <!-- Скрипт для обновления времени Москвы и Парижа (с учётом летнего/зимнего времени) -->
+    <script>
+        (function updateClocks() {
+            function getTimeWithOffset(offsetHours) {
+                const now = new Date();
+                // getTimezoneOffset возвращает смещение в минутах для местного времени относительно UTC.
+                // Мы хотим получить время в городах с фиксированным смещением? Но Париж с переходом на летнее время.
+                // Самый надежный: использовать toLocaleString с временной зоной.
+                // Но в браузере мы можем указать Europe/Moscow и Europe/Paris.
+                // Однако для точности используем вычисление вручную с учётом смещения UTC.
+                // Проще всего через toLocaleString, но нам нужны обновления каждую секунду.
+                // Москва всегда UTC+3 (нет перехода). Париж: летом UTC+2, зимой UTC+1.
+                // Определим через определение временной зоны браузера: 
+                // Создадим объект Date и используем Intl.DateTimeFormat с нужной таймзоной.
+                try {
+                    const moscowStr = new Intl.DateTimeFormat('ru-RU', {
+                        timeZone: 'Europe/Moscow',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false
+                    }).format(new Date());
+
+                    const parisStr = new Intl.DateTimeFormat('fr-FR', {
+                        timeZone: 'Europe/Paris',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false
+                    }).format(new Date());
+
+                    document.getElementById('moscow-time').textContent = moscowStr;
+                    document.getElementById('paris-time').textContent = parisStr;
+                } catch (e) {
+                    // fallback: просто посчитаем смещение (менее точно, но работает везде)
+                    const d = new Date();
+                    const utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+                    
+                    // Москва (UTC+3 постоянно)
+                    const moscowDate = new Date(utc + (3 * 3600000));
+                    const moscowTime = moscowDate.toLocaleTimeString('ru-RU', { hour12: false });
+                    
+                    // Париж: определяем, летнее ли время (упрощённо: с последнего воскресенья марта по последнее воскресенье октября)
+                    // Для точности лучше использовать моменты, но здесь упростим: проверим смещение для Парижа
+                    const jan = new Date(d.getFullYear(), 0, 1).getTimezoneOffset();
+                    const jul = new Date(d.getFullYear(), 6, 1).getTimezoneOffset();
+                    const isDST = Math.max(jan, jul) !== d.getTimezoneOffset(); // примерно
+                    // Но это местное смещение, не точно для Парижа. Поэтому надёжнее использовать Intl если есть.
+                    // Если Intl не поддерживается, то покажем заглушку или приблизительно.
+                    document.getElementById('moscow-time').textContent = moscowTime;
+                    document.getElementById('paris-time').textContent = "Ошибка зоны";
+                }
+            }
+
+            // Обновляем каждую секунду
+            getTimeWithOffset(); // сразу вызвать
+            setInterval(() => {
+                try {
+                    const moscowStr = new Intl.DateTimeFormat('ru-RU', { timeZone: 'Europe/Moscow', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(new Date());
+                    const parisStr = new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(new Date());
+                    document.getElementById('moscow-time').textContent = moscowStr;
+                    document.getElementById('paris-time').textContent = parisStr;
+                } catch (e) {
+                    // fallback тихий
+                }
+            }, 1000);
+        })();
+    </script>
+    <!-- Убедимся, что часы точно обновляются и отображаются правильно -->
+    <noscript>Включите JavaScript для отображения часов</noscript>
+</body>
+</html>

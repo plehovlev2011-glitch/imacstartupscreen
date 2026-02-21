@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ozon</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background: #005bff;  /* ярко-синий Ozon */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: white;
+            border-radius: 60px;
+            padding: 40px 50px;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.3);
+            border: 5px solid #ffd700; /* золотая рамка для праздничности */
+        }
+
+        /* Заголовок Ozon */
+        .ozon-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            border-bottom: 4px solid #005bff;
+            padding-bottom: 20px;
+        }
+
+        .ozon-logo {
+            font-size: 5rem;
+            font-weight: 900;
+            color: #005bff;
+            background: white;
+            padding: 0 20px;
+            border-radius: 60px;
+            letter-spacing: 2px;
+        }
+
+        .ozon-sub {
+            font-size: 2.2rem;
+            color: #1f3a5f;
+            background: #e5efff;
+            padding: 10px 30px;
+            border-radius: 40px;
+        }
+
+        /* Поисковая строка — огромная */
+        .search-section {
+            margin: 30px 0 40px;
+        }
+
+        .search-label {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #1f3a5f;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .search-row {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 30px 35px;
+            font-size: 2.8rem;
+            border: 5px solid #005bff;
+            border-radius: 70px;
+            outline: none;
+            background: #f5f9ff;
+            font-weight: 500;
+            color: #001f3f;
+            box-shadow: inset 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .search-input::placeholder {
+            color: #7f9fbf;
+            font-size: 2.4rem;
+        }
+
+        .search-button {
+            background: #ffd700;
+            border: none;
+            border-radius: 70px;
+            padding: 30px 50px;
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: #001f3f;
+            cursor: pointer;
+            border: 4px solid white;
+            box-shadow: 0 8px 0 #b8860b;
+            transition: 0.05s linear;
+            white-space: nowrap;
+        }
+
+        .search-button:active {
+            transform: translateY(6px);
+            box-shadow: 0 2px 0 #b8860b;
+        }
+
+        .example-query {
+            margin-top: 15px;
+            font-size: 2rem;
+            color: #2d4b6e;
+            background: #e9f0fa;
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: inline-block;
+        }
+
+        /* Раздел "Рекомендуем на Озоне!" */
+        .recommend-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #005bff;
+            margin: 50px 0 30px;
+            text-align: center;
+            background: #fff7cf;
+            padding: 20px;
+            border-radius: 60px;
+            border: 3px solid #ffd700;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        /* Карточка товара — большая плитка */
+        .product-card {
+            background: #f5f9ff;
+            border-radius: 50px;
+            padding: 25px 20px 30px;
+            text-align: center;
+            border: 4px solid #005bff;
+            box-shadow: 0 15px 0 #003d99;
+            transition: 0.1s;
+        }
+
+        .product-card:active {
+            transform: translateY(8px);
+            box-shadow: 0 5px 0 #003d99;
+        }
+
+        .product-image {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background: #d9e5ff;
+            border-radius: 40px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #003585;
+            border: 3px dashed white;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .product-name {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #001f3f;
+            margin: 15px 0 10px;
+        }
+
+        .product-price {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: #b12704;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 40px;
+            display: inline-block;
+            border: 2px solid #ffd700;
+        }
+
+        .product-price small {
+            font-size: 1.8rem;
+            font-weight: normal;
+            color: #2d4b6e;
+        }
+
+        .footer-note {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 2rem;
+            color: white;
+            background: #1f3a5f;
+            padding: 20px;
+            border-radius: 40px;
+            border: 3px solid #ffd700;
+        }
+
+        /* Адаптация */
+        @media (max-width: 800px) {
+            .container { padding: 20px; }
+            .products-grid { grid-template-columns: 1fr; }
+            .search-row { flex-direction: column; }
+            .search-input { padding: 20px; font-size: 2.2rem; width: 100%; }
+            .search-button { width: 100%; padding: 20px; }
+            .ozon-logo { font-size: 3.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Шапка Ozon -->
+        <div class="ozon-header">
+            <span class="ozon-logo">OZON</span>
+            <span class="ozon-sub">ИНТЕРНЕТ-ТОВАРЫ</span>
+        </div>
+
+        <!-- Поисковая строка (рабочая) -->
+        <div class="search-section">
+            <div class="search-label">🔍 Что ищем сегодня?</div>
+            <div class="search-row">
+                <input type="text" class="search-input" id="searchInput" placeholder="например, носки, чайник, iMac..." value="пример ввода запроса">
+                <button class="search-button" id="searchBtn">Найти на Ozon</button>
+            </div>
+            <div class="example-query">
+                ⚡ Введи любой товар и нажми Найти
+            </div>
+        </div>
+
+        <!-- Рекомендуем на Озоне! (3 случайных товара) -->
+        <div class="recommend-title">🔥 Рекомендуем на Озоне! 🔥</div>
+        <div class="products-grid" id="recommendations">
+            <!-- Карточки будут вставлены скриптом (3 случайных из 20) -->
+        </div>
+
+        <!-- Милая подсказка -->
+        <div class="footer-note">
+            ⭐ Нажми на карточку — откроется поиск этого товара на Ozon ⭐
+        </div>
+    </div>
+
+    <script>
+        // --- СПИСОК ИЗ 20 ТОВАРОВ (наименования + цена + имя файла) ---
+        const products = [
+            { name: "Носки шерстяные (пара)", price: 890, file: "1.png" },
+            { name: "Журнал 'Сад и огород'", price: 350, file: "2.png" },
+            { name: "Платье в цветочек", price: 3990, file: "3.png" },
+            { name: "iMac 24\" 8GB 256GB", price: 149990, file: "4.png" },
+            { name: "Телевизор 55\" 4K", price: 59990, file: "5.png" },
+            { name: "Лампа настольная LED", price: 2490, file: "6.png" },
+            { name: "Подушка ортопедическая", price: 3250, file: "7.png" },
+            { name: "Торшер напольный", price: 5490, file: "8.png" },
+            { name: "iPhone 15 128GB", price: 79990, file: "9.png" },
+            { name: "Чайник электрический", price: 2790, file: "10.png" },
+            { name: "Кружка с подогревом", price: 1290, file: "11.png" },
+            { name: "Плед мягкий 150x200", price: 3590, file: "12.png" },
+            { name: "Набор кастрюль 3шт", price: 4990, file: "13.png" },
+            { name: "Фен для волос", price: 3190, file: "14.png" },
+            { name: "Утюг беспроводной", price: 4290, file: "15.png" },
+            { name: "Микроволновка 20л", price: 9990, file: "16.png" },
+            { name: "Пылесос ручной", price: 6990, file: "17.png" },
+            { name: "Весы напольные", price: 1990, file: "18.png" },
+            { name: "Термос 1л", price: 1590, file: "19.png" },
+            { name: "Зонт автомат", price: 1490, file: "20.png" }
+        ];
+
+        // Функция для получения 3 случайных товаров
+        function getRandomProducts(count = 3) {
+            // перемешиваем массив и берём первые count
+            const shuffled = [...products].sort(() => Math.random() - 0.5);
+            return shuffled.slice(0, count);
+        }
+
+        // Функция для создания HTML карточки
+        function createProductCard(product) {
+            // Форматируем цену с пробелами
+            const formattedPrice = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+            
+            return `
+                <div class="product-card" onclick="searchProduct('${product.name}')">
+                    <div class="product-image">
+                        <img src="${product.file}" alt="${product.name}" onerror="this.style.background='#b3d0ff'; this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect width=%22200%22 height=%22200%22 fill=%22%234285f4%22/><text x=%2250%22 y=%22120%22 font-size=%2220%22 fill=%22white%22>${product.name.substring(0,15)}</text></svg>'">
+                    </div>
+                    <div class="product-name">${product.name}</div>
+                    <div class="product-price">${formattedPrice} ₽</div>
+                </div>
+            `;
+        }
+
+        // Заполняем рекомендации
+        function renderRecommendations() {
+            const randomProducts = getRandomProducts(3);
+            const container = document.getElementById('recommendations');
+            container.innerHTML = randomProducts.map(createProductCard).join('');
+        }
+
+        // Функция поиска (открывает Ozon с запросом)
+        window.searchProduct = function(query) {
+            const encoded = encodeURIComponent(query).replace(/%20/g, '+');
+            window.location.href = `https://www.ozon.ru/search/?from_global=true&text=${encoded}`;
+        };
+
+        // Обработка поисковой строки
+        document.getElementById('searchBtn').addEventListener('click', function() {
+            const query = document.getElementById('searchInput').value.trim();
+            if (query) {
+                searchProduct(query);
+            }
+        });
+
+        // Разрешаем поиск по Enter
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const query = this.value.trim();
+                if (query) {
+                    searchProduct(query);
+                }
+            }
+        });
+
+        // Инициализация: показываем 3 случайных товара
+        renderRecommendations();
+    </script>
+</body>
+</html>

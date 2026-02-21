@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ozon для бабушки</title>
+    <title>Главный экран для бабушки</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
         }
 
         body {
-            background: #005bff;
+            background: #2b4a6f;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -21,45 +21,97 @@
             padding: 0;
         }
 
-        /* Контейнер для двух баннеров */
-        .banners-container {
+        /* Верхняя плашка с кнопками навигации */
+        .top-nav {
             width: 100%;
-            background: #005bff; /* под цвет фона, чтобы сливалось */
+            background: #1f3a5f;
+            padding: 15px 30px;
             display: flex;
-            justify-content: center;
-            padding: 20px 20px 0 20px;
+            justify-content: flex-end;
             gap: 20px;
+            border-bottom: 3px solid #ffd700;
         }
 
-        /* Каждый баннер */
+        .nav-btn {
+            background: #ffd700;
+            border: none;
+            border-radius: 40px;
+            padding: 15px 35px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1f3a5f;
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 5px 0 #b8860b;
+            transition: 0.05s linear;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 #b8860b;
+        }
+
+        /* Заголовок над баннерами */
+        .banner-header {
+            width: 100%;
+            text-align: left;
+            padding: 25px 30px 10px 30px;
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: white;
+            background: #2b4a6f;
+            letter-spacing: 1px;
+        }
+
+        /* Контейнер для двух баннеров на всю ширину */
+        .banners-wrapper {
+            width: 100%;
+            background: #2b4a6f;
+            display: flex;
+            justify-content: center;
+            padding: 0;  /* убрал отступы */
+        }
+
+        .banners-container {
+            width: 100%;
+            max-width: 100%;  /* на всю доступную ширину */
+            display: flex;
+            justify-content: center;
+            gap: 0;  /* убрал зазоры, чтобы были вплотную */
+            background: #2b4a6f;
+        }
+
+        /* Каждый баннер занимает половину доступной ширины */
         .banner {
-            width: 1100px;        /* фиксированная ширина как просили */
-            height: 218px;        /* фиксированная высота */
-            background: #e0e0e0;  /* серый фон пока нет картинки */
+            flex: 1;  /* каждый баннер занимает равную долю */
+            height: auto;
+            aspect-ratio: 1100/218;  /* сохраняем пропорции 1100x218 */
+            background: #e0e0e0;
             overflow: hidden;
-            flex-shrink: 0;        /* чтобы не сжимались */
         }
 
         .banner img {
             width: 100%;
             height: 100%;
-            object-fit: cover;    /* чтобы картинка заполнила баннер */
+            object-fit: cover;
             display: block;
         }
 
         /* Основной белый блок */
         .container {
-            max-width: 1400px;     /* стал шире, чтобы вместить большие баннеры */
+            max-width: 1400px;
             width: 100%;
             background: white;
-            border-radius: 60px;
+            border-radius: 60px 60px 60px 60px;
             padding: 40px 50px;
             box-shadow: 0 25px 40px rgba(0,0,0,0.3);
             border: 5px solid #ffd700;
             margin: 30px 20px;
         }
 
-        /* Заголовок Ozon */
+        /* Заголовок Ozon (теперь это кнопка на главную страницу) */
         .ozon-header {
             display: flex;
             align-items: center;
@@ -77,6 +129,14 @@
             padding: 0 20px;
             border-radius: 60px;
             letter-spacing: 2px;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            background: white;
+        }
+
+        .ozon-logo:active {
+            transform: translateY(3px);
         }
 
         .ozon-sub {
@@ -87,13 +147,13 @@
             border-radius: 40px;
         }
 
-        /* Поисковая строка — УВЕЛИЧЕНА */
+        /* Поисковая строка — увеличенная */
         .search-section {
             margin: 30px 0 40px;
         }
 
         .search-label {
-            font-size: 2.4rem;    /* побольше */
+            font-size: 2.4rem;
             font-weight: 600;
             color: #1f3a5f;
             margin-bottom: 20px;
@@ -108,8 +168,8 @@
 
         .search-input {
             flex: 1;
-            padding: 35px 40px;    /* больше поля */
-            font-size: 3.2rem;      /* крупнее текст */
+            padding: 35px 40px;
+            font-size: 3.2rem;
             border: 6px solid #005bff;
             border-radius: 80px;
             outline: none;
@@ -128,7 +188,7 @@
             background: #ffd700;
             border: none;
             border-radius: 80px;
-            padding: 35px 60px;     /* больше кнопка */
+            padding: 35px 60px;
             font-size: 3.2rem;
             font-weight: bold;
             color: #001f3f;
@@ -174,11 +234,11 @@
             margin-bottom: 20px;
         }
 
-        /* Карточка товара — теперь просто большая цветная кнопка (БЕЗ ФОТО) */
+        /* Карточка товара — просто большая цветная кнопка */
         .product-card {
             background: #f5f9ff;
             border-radius: 50px;
-            padding: 45px 20px 50px;  /* больше внутренний отступ */
+            padding: 45px 20px 50px;
             text-align: center;
             border: 4px solid #005bff;
             box-shadow: 0 15px 0 #003d99;
@@ -187,7 +247,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            min-height: 280px;        /* высота как с фото */
+            min-height: 280px;
         }
 
         .product-card:active {
@@ -196,14 +256,14 @@
         }
 
         .product-name {
-            font-size: 2.8rem;        /* крупнее название */
+            font-size: 2.8rem;
             font-weight: 700;
             color: #001f3f;
             margin: 10px 0 20px;
         }
 
         .product-price {
-            font-size: 3.2rem;        /* крупнее цена */
+            font-size: 3.2rem;
             font-weight: 900;
             color: #b12704;
             background: white;
@@ -226,13 +286,17 @@
         }
 
         /* Адаптация */
-        @media (max-width: 1400px) {
+        @media (max-width: 1000px) {
             .banners-container {
-                flex-wrap: wrap;      /* если узко, баннеры перейдут на новую строку */
+                flex-direction: column;
             }
             .banner {
                 width: 100%;
-                max-width: 1100px;
+                aspect-ratio: 1100/218;
+            }
+            .top-nav {
+                justify-content: center;
+                flex-wrap: wrap;
             }
         }
 
@@ -243,31 +307,43 @@
             .search-input { padding: 25px; font-size: 2.5rem; width: 100%; }
             .search-button { width: 100%; padding: 25px; }
             .ozon-logo { font-size: 3.5rem; }
-            .banner { height: 150px; } /* поменьше на мобилках */
         }
     </style>
 </head>
 <body>
-    <!-- Два баннера сверху (левый и правый) -->
-    <div class="banners-container">
-        <!-- Левый баннер (banner.png, banner2.png, banner3.png, banner4.png) -->
-        <div class="banner">
-            <img id="leftBanner" src="banner.png" alt="Реклама">
-        </div>
-        <!-- Правый баннер (bannerR.png, bannerR2.png, bannerR3.png, bannerR4.png) -->
-        <div class="banner">
-            <img id="rightBanner" src="bannerR.png" alt="Реклама">
+    <!-- Верхняя навигация: Кабинет и Мои заказы -->
+    <div class="top-nav">
+        <button class="nav-btn" onclick="window.location.href='https://www.ozon.ru/my/'">👤 Кабинет</button>
+        <button class="nav-btn" onclick="window.location.href='https://www.ozon.ru/my/orderlist/'">📦 Мои заказы</button>
+    </div>
+
+    <!-- Надпись над баннерами -->
+    <div class="banner-header">
+        📢 Предложения из сети Интернет
+    </div>
+
+    <!-- Два баннера на всю ширину окна -->
+    <div class="banners-wrapper">
+        <div class="banners-container">
+            <!-- Левый баннер (banner.png, banner2.png, banner3.png) -->
+            <div class="banner">
+                <img id="leftBanner" src="banner.png" alt="Реклама">
+            </div>
+            <!-- Правый баннер (bannerR.png, bannerR2.png, bannerR3.png, bannerR4.png) -->
+            <div class="banner">
+                <img id="rightBanner" src="bannerR.png" alt="Реклама">
+            </div>
         </div>
     </div>
 
     <div class="container">
-        <!-- Шапка Ozon -->
+        <!-- Шапка Ozon (теперь ведет на главную страницу) -->
         <div class="ozon-header">
-            <span class="ozon-logo">OZON</span>
+            <button class="ozon-logo" onclick="window.location.href='https://imacstartupscreen.vercel.app/'">OZON</button>
             <span class="ozon-sub">ИНТЕРНЕТ-ТОВАРЫ</span>
         </div>
 
-        <!-- Поисковая строка (увеличенная) -->
+        <!-- Поисковая строка -->
         <div class="search-section">
             <div class="search-label">🔍 Что ищем сегодня?</div>
             <div class="search-row">
@@ -279,20 +355,20 @@
             </div>
         </div>
 
-        <!-- Рекомендуем на Озоне! (3 случайных товара) -->
+        <!-- Рекомендуем на Озоне! -->
         <div class="recommend-title">🔥 Рекомендуем на Озоне! 🔥</div>
         <div class="products-grid" id="recommendations">
-            <!-- Карточки будут вставлены скриптом (3 случайных из 20) -->
+            <!-- Карточки будут вставлены скриптом -->
         </div>
 
-        <!-- Милая подсказка -->
+        <!-- Подсказка -->
         <div class="footer-note">
             ⭐ Нажми на карточку — откроется поиск этого товара на Ozon ⭐
         </div>
     </div>
 
     <script>
-        // --- СПИСОК ИЗ 20 ТОВАРОВ (наименования + цена) ---
+        // --- СПИСОК ИЗ 20 ТОВАРОВ ---
         const products = [
             { name: "Носки шерстяные (пара)", price: 890 },
             { name: "Журнал 'Сад и огород'", price: 350 },
@@ -316,13 +392,11 @@
             { name: "Зонт автомат", price: 1490 }
         ];
 
-        // Функция для получения 3 случайных товаров
         function getRandomProducts(count = 3) {
             const shuffled = [...products].sort(() => Math.random() - 0.5);
             return shuffled.slice(0, count);
         }
 
-        // Функция для создания HTML карточки (теперь просто кнопка)
         function createProductCard(product) {
             const formattedPrice = product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
             return `
@@ -333,20 +407,17 @@
             `;
         }
 
-        // Заполняем рекомендации
         function renderRecommendations() {
             const randomProducts = getRandomProducts(3);
             const container = document.getElementById('recommendations');
             container.innerHTML = randomProducts.map(createProductCard).join('');
         }
 
-        // Функция поиска
         window.searchProduct = function(query) {
             const encoded = encodeURIComponent(query).replace(/%20/g, '+');
             window.location.href = `https://www.ozon.ru/search/?from_global=true&text=${encoded}`;
         };
 
-        // Обработка поиска
         document.getElementById('searchBtn').addEventListener('click', function() {
             const query = document.getElementById('searchInput').value.trim();
             if (query) searchProduct(query);
@@ -359,15 +430,15 @@
             }
         });
 
-        // Инициализация товаров
         renderRecommendations();
 
-        // --- СКРИПТ ДЛЯ СМЕНЫ БАННЕРОВ КАЖДЫЕ 8 СЕКУНД ---
+        // --- СКРИПТ ДЛЯ СМЕНЫ БАННЕРОВ КАЖДЫЕ 6 СЕКУНД ---
         const leftBanner = document.getElementById('leftBanner');
         const rightBanner = document.getElementById('rightBanner');
 
-        // Массивы с именами файлов для левого и правого баннера
-        const leftBanners = ['banner.png', 'banner2.png', 'banner3.png', 'banner4.png'];
+        // Левый баннер: только 3 изображения
+        const leftBanners = ['banner.png', 'banner2.png', 'banner3.png'];
+        // Правый баннер: 4 изображения
         const rightBanners = ['bannerR.png', 'bannerR2.png', 'bannerR3.png', 'bannerR4.png'];
 
         let leftIndex = 0;
@@ -385,10 +456,10 @@
             rightBanner.alt = `Реклама ${rightIndex + 1}`;
         }
 
-        // Запускаем интервал на 8 секунд (8000 мс)
-        setInterval(changeBanners, 8000);
+        // Запускаем интервал на 6 секунд (6000 мс)
+        setInterval(changeBanners, 6000);
 
-        // Обработка ошибок загрузки изображений (чтобы не было битых ссылок)
+        // Обработка ошибок загрузки
         leftBanner.onerror = function() {
             this.style.background = '#ffd700';
             this.alt = 'Реклама временно недоступна';
